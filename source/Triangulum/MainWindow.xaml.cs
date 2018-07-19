@@ -127,6 +127,7 @@ namespace Triangulum
 Triangulum
 Pascal's Triangle Generator
 © 2018 Matt McManis
+mattmcmanis@outlook.com
 GPL-3.0
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
