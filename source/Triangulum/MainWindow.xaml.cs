@@ -127,6 +127,7 @@ namespace Triangulum
 Triangulum
 Pascal's Triangle Generator
 © 2018 Matt McManis
+http://github.com/MattMcManis/Triangulum
 mattmcmanis@outlook.com
 GPL-3.0
 
