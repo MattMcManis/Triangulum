@@ -14,6 +14,10 @@ Pascal's Triangle Generator
 
 ![Triangulum](https://raw.githubusercontent.com/MattMcManis/Triangulum/master/images/triangulum.png)  
 
+
+Example Output:
+
+
 ```
                 1 
                1 1 
@@ -32,6 +36,8 @@ Pascal's Triangle Generator
   1   1   1   1   1   1   1   1 
  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
 ```
+
+![Triangulum](https://raw.githubusercontent.com/MattMcManis/Triangulum/master/images/example-02.png)  
 
 &nbsp;
 
