@@ -1,0 +1,266 @@
+﻿<!-- 
+    Triangulum
+    Copyright (C) 2018 Matt McManis
+    http://github.com/MattMcManis/Triangulum
+    mattmcmanis@outlook.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.If not, see<http://www.gnu.org/licenses/> . 
+ -->
+    
+<Window x:Class="Triangulum.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+        xmlns:Themes1="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
+        xmlns:local="clr-namespace:Triangulum"
+        xmlns:settings="clr-namespace:Triangulum.Properties"
+        mc:Ignorable="d"
+        
+        Closing="Window_Closing"
+        
+        Icon="icon.ico"
+        Title="Triangulum v0.1.0" 
+        
+        RenderOptions.BitmapScalingMode="Fant"
+        UseLayoutRounding="True"
+        Height="494"
+        MinHeight="494"
+        Width="850" 
+        MinWidth="850"
+        >
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF383838"/>
+            <GradientStop Color="#FFD1D1D1" Offset="0.876"/>
+            <GradientStop Color="#FFA2A2A2" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid>
+
+        <!-- Display -->
+        <TextBox x:Name="tbxDisplay" 
+                 FontFamily="{DynamicResource RobotoMono}"
+                 Text="{Binding Display_Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="10,10,10,46" 
+                 Padding="10"
+                 VerticalScrollBarVisibility="Auto" 
+                 HorizontalScrollBarVisibility="Auto" 
+                 TextWrapping="{Binding Wrap_Text}"
+                 FontSize="{Binding Value, ElementName=slFontSize, UpdateSourceTrigger=PropertyChanged}" 
+                 Foreground="White" 
+                 Background="Black"
+                 IsReadOnly="True"
+                 IsUndoEnabled="False">
+            <TextBox.Resources>
+                <Style x:Key="RobotMono-Regular">
+                    <Setter Property="TextElement.FontFamily" 
+                            Value="Resources/#Roboto Mono" />
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <!-- Center -->
+        <CheckBox x:Name="cbxCenter" 
+                  IsChecked="{Binding Center_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Center" 
+                  Margin="0,0,525,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="70" />
+
+        <!-- Display Wrap -->
+        <CheckBox x:Name="cbxWrap" 
+                  IsChecked="{Binding Wrap_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Wrap" 
+                  Margin="0,0,475,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" 
+                  HorizontalAlignment="Right" 
+                  Width="50" 
+                  Checked="cbxWrap_Checked"
+                  Unchecked="cbxWrap_Unchecked"/>
+
+        <!-- Info -->
+        <Button x:Name="btnInfo" 
+                Cursor="Hand"
+                Margin="10,0,0,14" 
+                Click="btnInfo_Click"
+                Height="22" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Left" 
+                Width="22" Background="#FFF0F0F0">
+            <Image Source="Resources/info.png"
+                   Width="5" 
+                   Height="10" 
+                   Stretch="Fill" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        </Button>
+
+        <!-- Clear -->
+        <Button x:Name="btnClear" 
+                Cursor="Hand"
+                Margin="39,0,0,14" 
+                Height="22" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Left" 
+                Width="22" 
+                Background="#FFF0F0F0" Click="btnClear_Click">
+            <Image Source="Resources/clear.png"
+                   Width="10" 
+                   Height="10" 
+                   Margin="0,0,0,0"
+                   Opacity="0.8"
+                   Stretch="Fill" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        </Button>
+
+        <!-- Save -->
+        <Button x:Name="btnSave" 
+                Cursor="Hand"
+                Margin="68,0,0,14" 
+                Height="22" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Left" 
+                Width="22" 
+                Click="btnSave_Click" 
+                Background="#FFF0F0F0">
+            <Image Source="Resources/save.png"
+                   Width="11" 
+                   Height="12" 
+                   Margin="0,0,0,0"
+                   Opacity="0.8"
+                   Stretch="Fill" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        </Button>
+
+        <!-- Font Size -->
+        <Label Content="Size"
+               HorizontalAlignment="Left" 
+               Margin="98,0,0,11" 
+               Width="37" 
+               Height="28" 
+               VerticalAlignment="Bottom"/>
+        <Slider x:Name="slFontSize" 
+                HorizontalAlignment="Left"
+                Margin="132,0,0,16" 
+                Width="65"
+                IsMoveToPointEnabled="True"
+                Minimum="1"
+                Maximum="16" 
+                Value="10"
+                IsSnapToTickEnabled="True"
+                TickFrequency="1"
+                MouseDoubleClick="slFontSize_MouseDoubleClick" 
+                Height="18" 
+                VerticalAlignment="Bottom"/>
+        <TextBox x:Name="tbxFontSize"
+                 Text="{Binding Value, ElementName=slFontSize, UpdateSourceTrigger=PropertyChanged}" 
+                 TextWrapping="Wrap" 
+                 Margin="202,0,0,14"
+                 Padding="2,0,2,0"
+                 HorizontalAlignment="Left"
+                 Width="30" 
+                 Height="22" 
+                 VerticalAlignment="Bottom"/>
+
+        <!-- Inline -->
+        <CheckBox x:Name="cbxInline" 
+                  IsChecked="{Binding Inline_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Inline" 
+                  Margin="0,0,412,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" 
+                  HorizontalAlignment="Right" 
+                  Width="50"/>
+
+        <!-- ASCII -->
+        <CheckBox x:Name="cbxASCII" 
+                  IsChecked="{Binding ASCII_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="ASCII" 
+                  Margin="0,0,350,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" 
+                  HorizontalAlignment="Right" 
+                  Width="50" 
+                  Checked="cbxASCII_Checked"/>
+
+        <!-- Binary -->
+        <CheckBox x:Name="cbxBinary" 
+                  IsChecked="{Binding Binary_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Binary" 
+                  Margin="0,0,283,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" 
+                  HorizontalAlignment="Right" 
+                  Width="56" 
+                  Checked="cbxBinary_Checked"
+                  Unchecked="cbxBinary_Unchecked"/>
+
+        <!-- Binary 0 -->
+        <CheckBox x:Name="cbx0" 
+                  IsChecked="{Binding Binary0_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="0" 
+                  Margin="0,0,256,18" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" 
+                  HorizontalAlignment="Right" 
+                  Width="26" Checked="cbx0_Checked"/>
+
+        <!-- Binary 1 -->
+        <CheckBox x:Name="cbx1" 
+                  Content="1" 
+                  IsChecked="{Binding Binary1_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Margin="0,0,225,18" 
+                  HorizontalAlignment="Right" 
+                  Width="26" 
+                  Height="15" 
+                  VerticalAlignment="Bottom" Checked="cbx1_Checked"/>
+
+        <!-- Rows -->
+        <Label Content="Rows" 
+               Margin="0,0,171,11" 
+               Height="28" 
+               VerticalAlignment="Bottom" 
+               HorizontalAlignment="Right" 
+               Width="37"/>
+        <TextBox x:Name="tbxRows"
+                 Text="{Binding Rows_Text, Mode=TwoWay}"
+                 Margin="0,0,95,14" 
+                 Padding="3,0,3,0"
+                 TextWrapping="NoWrap" 
+                 MaxLines="1"
+                 PreviewKeyDown="tbxRows_PreviewKeyDown"
+                 HorizontalAlignment="Right"
+                 Width="75" 
+                 Height="22" 
+                 VerticalAlignment="Bottom"/>
+
+        <!-- Go -->
+        <Button x:Name="btnGo" 
+                Content="Go" 
+                Cursor="Hand"
+                Margin="0,0,10,14" 
+                Click="btnGo_Click" 
+                Height="22" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Right" 
+                Width="75" Background="#FFF0F0F0"/>
+    </Grid>
+</Window>

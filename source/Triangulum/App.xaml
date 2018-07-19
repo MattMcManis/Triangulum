@@ -1,0 +1,11 @@
+﻿<Application x:Class="PascalsTriangle.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PascalsTriangle"
+             StartupUri="MainWindow.xaml">
+    
+    <Application.Resources>
+        <FontFamily x:Key="RobotoMono">pack://application:,,,/resources/#Roboto Mono</FontFamily>
+    </Application.Resources>
+    
+</Application>
