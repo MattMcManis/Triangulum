@@ -108,7 +108,7 @@ Integer Sum
 https://github.com/MattMcManis/Triangulum/releases
 
 #### Requires
-[Microsoft .NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653)
+[Microsoft .NET Framework 4.6.1](https://www.microsoft.com/en-us/download/details.aspx?id=49981)
 
 &nbsp;
 
