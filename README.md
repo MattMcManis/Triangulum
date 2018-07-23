@@ -15,8 +15,9 @@ Pascal's Triangle Generator
 ![Triangulum](https://raw.githubusercontent.com/MattMcManis/Triangulum/master/images/triangulum.png)  
 
 
-Example Output:
+**Example Output:**
 
+Binary 1's
 
 ```
                 1 
@@ -37,7 +38,68 @@ Example Output:
  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
 ```
 
-![Triangulum](https://raw.githubusercontent.com/MattMcManis/Triangulum/master/images/example-02.png)  
+Binary 0's
+
+```                  
+                   
+                0   
+                     
+              0 0 0   
+               0 0     
+            0   0   0   
+                         
+          0 0 0 0 0 0 0   
+           0 0 0 0 0 0     
+        0   0 0 0 0 0   0   
+             0 0 0 0         
+      0 0 0   0 0 0   0 0 0   
+       0 0     0 0     0 0     
+    0   0   0   0   0   0   0   
+
+
+```
+
+Binary to Decimal
+
+```
+1
+3
+5
+15
+17
+51
+85
+255
+257
+771
+1285
+3855
+4369
+13107
+21845
+65535
+```
+
+Integer Sum
+
+```
+1
+2
+4
+8
+16
+32
+64
+128
+256
+512
+1024
+2048
+4096
+8192
+16384
+32768
+```
 
 &nbsp;
 
