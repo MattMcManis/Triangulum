@@ -60,7 +60,7 @@ namespace Triangulum
 
             Inline_IsChecked = false;
 
-            Rows_Text = "300";
+            Rows_Text = "200";
         }
 
 

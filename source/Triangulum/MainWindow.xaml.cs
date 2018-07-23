@@ -30,6 +30,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Numerics;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace Triangulum
 {
@@ -42,6 +43,11 @@ namespace Triangulum
         ///     View Model
         /// </summary>
         public ViewModel vm = new ViewModel();
+
+        /// <summary>
+        ///     RichTextBox
+        /// </summary>
+        public static Paragraph p = new Paragraph();
 
 
         /// <summary>
@@ -263,29 +269,23 @@ Apache License 2.0");
                 if (vm.Decimal_IsChecked == false &&
                     vm.Sum_IsChecked == false)
                 {
-                    // Center
-                    if (vm.Center_IsChecked == true)
-                    {
-                        string rowJoin = string.Join(" ", triangle_row);
-
-                        int maxLength = rows;
-
-                        int spacer = maxLength - i;
-
-                        rowJoin = new string(' ', spacer) + rowJoin;
-
-                        triangle.Add(rowJoin);
-                    }
-                    
-                    // Left
-                    else if (vm.Center_IsChecked == false)
-                    {
-                        triangle.Add(string.Join(" ", triangle_row));
-                    }
-                    
+                    triangle.Add(string.Join(" ", triangle_row));
                 }
 
             } // End Loop
+
+
+
+            // Center
+            if (vm.Center_IsChecked == true)
+            {
+                var maxLength = triangle.Last().Length;
+                for (i = 0; i < rows; i++)
+                {
+                    triangle[i] = new string(' ', (maxLength - triangle[i].Length) / 2) + triangle[i];
+                }
+            }
+
 
 
             // Output
@@ -333,6 +333,16 @@ Apache License 2.0");
 
             // Display
             vm.Display_Text = output;
+
+            //Dispatcher.BeginInvoke((Action)(() =>
+            //{
+            //    p.Inlines.Clear();
+            //    rtbDisplay.Document = new FlowDocument(p);
+            //    rtbDisplay.BeginChange();
+            //    p.Inlines.Add(new Run(vm.Display_Text));
+            //    rtbDisplay.EndChange();
+            //}));
+
         }
 
 

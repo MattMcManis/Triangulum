@@ -32,7 +32,7 @@
         Closing="Window_Closing"
         
         Icon="icon.ico"
-        Title="Triangulum v0.2.1" 
+        Title="Triangulum v0.2.2" 
         
         RenderOptions.BitmapScalingMode="Fant"
         UseLayoutRounding="True"
@@ -53,7 +53,6 @@
     <Grid>
 
         <!-- Display -->
-        <!--FontSize="{Binding Value, ElementName=slFontSize, UpdateSourceTrigger=PropertyChanged}"-->
         <TextBox x:Name="tbxDisplay" 
                  FontFamily="{DynamicResource RobotoMono}"
                  Text="{Binding Display_Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -74,6 +73,25 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
+
+        <!--<RichTextBox x:Name="rtbDisplay" 
+                     Margin="10,10,10,46" 
+                     Padding="10"
+                     FontSize="12"
+                     Foreground="White" 
+                     Background="Black"
+                     IsReadOnly="True"
+                     Grid.ColumnSpan="1" 
+                     IsUndoEnabled="False"
+                     VerticalScrollBarVisibility="Auto" 
+                     HorizontalScrollBarVisibility="Auto">
+            <RichTextBox.Resources>
+                <Style x:Key="RobotMono-Regular">
+                    <Setter Property="TextElement.FontFamily" 
+                            Value="Resources/#Roboto Mono" />
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>-->
 
         <!-- Sum -->
         <CheckBox x:Name="cbxSum" 
