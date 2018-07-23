@@ -83,19 +83,19 @@ namespace Triangulum
             }
         }
         // Font Size
-        public string _FontSize_Text;
-        public string FontSize_Text
+        public double _Display_FontSize = 12;
+        public double Display_FontSize
         {
-            get { return _FontSize_Text; }
+            get { return _Display_FontSize; }
             set
             {
-                if (_FontSize_Text == value)
+                if (_Display_FontSize == value)
                 {
                     return;
                 }
 
-                _Wrap_Text = value;
-                OnPropertyChanged("FontSize_Text");
+                _Display_FontSize = value;
+                OnPropertyChanged("Display_FontSize");
             }
         }
         // Text Wrap
@@ -244,6 +244,58 @@ namespace Triangulum
                 _Binary1_IsChecked = value;
             }
         }
+
+
+        // -------------------------
+        // Sum - Toggle
+        // -------------------------
+        private bool _Sum_IsChecked;
+        public bool Sum_IsChecked
+        {
+            get { return _Sum_IsChecked; }
+            set
+            {
+                if (_Sum_IsChecked == value) return;
+
+                _Sum_IsChecked = value;
+            }
+        }
+
+
+        // -------------------------
+        // Decimal - Toggle
+        // -------------------------
+        // Checked
+        private bool _Decimal_IsChecked;
+        public bool Decimal_IsChecked
+        {
+            get { return _Decimal_IsChecked; }
+            set
+            {
+                if (_Decimal_IsChecked == value) return;
+
+                _Decimal_IsChecked = value;
+            }
+        }
+
+        // Enabled
+        private bool _Decimal_IsEnabled = true;
+        public bool Decimal_IsEnabled
+        {
+            get { return _Decimal_IsEnabled; }
+            set
+            {
+                if (_Decimal_IsEnabled == value)
+                {
+                    return;
+                }
+
+                _Decimal_IsEnabled = value;
+                OnPropertyChanged("Decimal_IsEnabled");
+            }
+        }
+
+
 
 
     }

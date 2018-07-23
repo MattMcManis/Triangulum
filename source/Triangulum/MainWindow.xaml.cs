@@ -28,6 +28,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Numerics;
+using System.Linq;
 
 namespace Triangulum
 {
@@ -194,7 +196,11 @@ Apache License 2.0");
 
             List<string> triangle = new List<string>();
 
-            System.Numerics.BigInteger no_row, c = 1, blk, i, j;
+            // System.Numerics.BigInteger
+            BigInteger row_no;
+            BigInteger c = 1;
+            BigInteger blk;
+            BigInteger i, j;
 
             string spacer = string.Empty;
             if (vm.Center_IsChecked == true)
@@ -202,11 +208,14 @@ Apache License 2.0");
                 spacer = " ";
             }
 
-            no_row = row;
-            for (i = 0; i < no_row; i++)
+            row_no = row;
+            for (i = 0; i < row_no; i++)
             {
-                for (blk = 1; blk <= no_row - i; blk++)
-                    triangle.Add(spacer);
+                List<string> triangle_row = new List<string>();
+
+                // Center
+                for (blk = 1; blk <= row_no - i; blk++)
+                    triangle_row.Add(spacer);
 
                 for (j = 0; j <= i; j++)
                 {
@@ -217,28 +226,75 @@ Apache License 2.0");
 
                     // Convert to Binary
                     if (vm.Binary_IsChecked == true)
+                    {
                         if (c % 2 != 0)
                             if (vm.Binary1_IsChecked == true)
-                                triangle.Add("1 ");
+                            {
+                                triangle_row.Add("1 ");
+                            }
                             else
-                                triangle.Add("  ");
+                            {
+                                triangle_row.Add("  ");
+                            }
                         else
                             if (vm.Binary0_IsChecked == true)
-                                triangle.Add("0 ");
-                            else
-                                triangle.Add("  ");
+                        {
+                            triangle_row.Add("0 ");
+                        }
+                        else
+                        {
+                            triangle_row.Add("  ");
+                        }
+                    }
 
                     // Integers
                     else
-                        triangle.Add(string.Format("{0} ", c));
+                    {
+                        triangle_row.Add(string.Format("{0} ", c));
+                    }
+
                 }
 
-                // Linebreak
-                triangle.Add("\n");
-            }
+
+                // Decimal
+                if (vm.Decimal_IsChecked == true)
+                {
+                    string join = string.Join("", triangle_row);
+
+                    // Remove WhiteSpaces
+                    join = Regex.Replace(join, " ", ""); 
+
+                    // Convert Binary to Decimal
+                    BigInteger sequence = BinaryToDec(join);
+
+                    // Add to Triangle
+                    triangle.Add(Convert.ToString(sequence));
+                }
+
+
+                // Sum
+                if (vm.Sum_IsChecked == true)
+                {
+                    BigInteger sum = triangle_row
+                                     .Where(x => !string.IsNullOrWhiteSpace(x))
+                                     .Where(x => !string.IsNullOrEmpty(x))
+                                     .Aggregate(BigInteger.Zero, (x, a) => x + BigInteger.Parse(a));
+
+                    triangle.Add(string.Join(" ", sum));
+                }
+
+
+                // Individual
+                if (vm.Decimal_IsChecked == false &&
+                    vm.Sum_IsChecked == false)
+                {
+                    triangle.Add(string.Join("", triangle_row));
+                }
+
+            } // End Loop
 
             // Output
-            string output = string.Join(string.Empty, triangle);
+            string output = string.Join("\n", triangle);
 
             // Convert to ASCII
             if (vm.ASCII_IsChecked == true)
@@ -259,6 +315,44 @@ Apache License 2.0");
 
             // Display
             vm.Display_Text = output;
+        }
+
+
+
+        /// <summary>
+        ///     Binary to Decimal
+        /// </summary>
+        static BigInteger BinaryToDec(string input)
+        {
+            char[] array = input.ToCharArray();
+            // Reverse since 16-8-4-2-1 not 1-2-4-8-16. 
+            Array.Reverse(array);
+            /*
+             * [0] = 1
+             * [1] = 2
+             * [2] = 4
+             * etc
+             */
+            BigInteger sum = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == '1')
+                {
+                    // Method uses raising 2 to the power of the index. 
+                    if (i == 0)
+                    {
+                        sum += 1;
+                    }
+                    else
+                    {
+                        sum += (BigInteger)Math.Pow(2, i);
+                    }
+                }
+
+            }
+
+            return sum;
         }
 
 
@@ -290,9 +384,17 @@ Apache License 2.0");
         /// <summary>
         ///     Font Size - Slider
         /// </summary>
+        // Double Click
         private void slFontSize_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            slFontSize.Value = 9;
+            // Return to Default Size
+            slFontSize.Value = 12;
+        }
+        // Mouse Up
+        private void slFontSize_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            // Change Font Size
+            vm.Display_FontSize = slFontSize.Value;
         }
 
 
@@ -311,10 +413,66 @@ Apache License 2.0");
 
 
         /// <summary>
+        ///     Center - CheckBox
+        /// </summary>
+        private void cbxCenter_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck Inline
+            if (vm.Inline_IsChecked == true)
+            {
+                cbxInline.IsChecked = false;
+                vm.Inline_IsChecked = false;
+            }
+
+            // Uncheck ASCII
+            if (vm.ASCII_IsChecked == true)
+            {
+                cbxASCII.IsChecked = false;
+                vm.ASCII_IsChecked = false;
+            }
+
+            // Uncheck Decimal
+            if (vm.Decimal_IsChecked == true)
+            {
+                cbxDecimal.IsChecked = false;
+                vm.Decimal_IsChecked = false;
+            }
+
+            // Uncheck Sum
+            if (vm.Sum_IsChecked == true)
+            {
+                cbxSum.IsChecked = false;
+                vm.Sum_IsChecked = false;
+            }
+        }
+
+
+        /// <summary>
+        ///     Inline - CheckBox
+        /// </summary>
+        private void cbxInline_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck Center
+            if (vm.Center_IsChecked == true)
+            {
+                cbxCenter.IsChecked = false;
+                vm.Center_IsChecked = false;
+            }
+        }
+
+
+        /// <summary>
         ///     ASCII - CheckBox
         /// </summary>
         private void cbxASCII_Checked(object sender, RoutedEventArgs e)
         {
+            // Uncheck Center
+            if (vm.Center_IsChecked == true)
+            {
+                cbxCenter.IsChecked = false;
+                vm.Center_IsChecked = false;
+            }
+
             // Uncheck Binary
             cbxBinary.IsChecked = true;
             cbx0.IsChecked = true;
@@ -323,7 +481,46 @@ Apache License 2.0");
             vm.Binary_IsChecked = true;
             vm.Binary1_IsChecked = true;
             vm.Binary0_IsChecked = true;
+
+            // Uncheck Decimal
+            cbxDecimal.IsChecked = false;
+            vm.Decimal_IsChecked = false;
+
+            // Uncheck Sum
+            cbxSum.IsChecked = false;
+            vm.Sum_IsChecked = false;
         }
+
+        /// <summary>
+        ///     Decimal - CheckBox
+        /// </summary>
+        private void cbxDecimal_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck Center
+            if (vm.Center_IsChecked == true)
+            {
+                cbxCenter.IsChecked = false;
+                vm.Center_IsChecked = false;
+            }
+
+            // Check Binary 0 & 1
+            cbxBinary.IsChecked = true;
+            cbx0.IsChecked = true;
+            cbx1.IsChecked = true;
+
+            vm.Binary_IsChecked = true;
+            vm.Binary0_IsChecked = true;
+            vm.Binary1_IsChecked = true;
+
+            // Uncheck ASCII
+            cbxASCII.IsChecked = false;
+            vm.ASCII_IsChecked = false;
+
+            // Uncheck Sum
+            cbxSum.IsChecked = false;
+            vm.Sum_IsChecked = false;
+        }
+
 
         /// <summary>
         ///     Binary - CheckBox
@@ -338,7 +535,11 @@ Apache License 2.0");
             vm.Binary_IsChecked = true;
             //vm.Binary0_IsChecked = true;
             vm.Binary1_IsChecked = true;
-            
+
+
+            // Enable Decimal
+            vm.Decimal_IsEnabled = true;
+
         }
 
         // Unchecked
@@ -351,6 +552,12 @@ Apache License 2.0");
             vm.Binary_IsChecked = false;
             vm.Binary0_IsChecked = false;
             vm.Binary1_IsChecked = false;
+
+            // Uncheck Decimal
+            vm.Decimal_IsChecked = false;
+
+            // Disable Decimal
+            vm.Decimal_IsEnabled = false;
         }
 
         // Binary 0 - CheckBox
@@ -373,6 +580,31 @@ Apache License 2.0");
                 cbxBinary.IsChecked = true;
                 vm.Binary_IsChecked = true;
             }
+        }
+
+
+        /// <summary>
+        ///     Sum - CheckBox
+        /// </summary>
+        // Unchecked
+        private void cbxSum_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck Center
+            cbxCenter.IsChecked = false;
+            vm.Center_IsChecked = false;
+
+            // Uncheck Decimal
+            cbxDecimal.IsChecked = false;
+            vm.Decimal_IsChecked = false;
+
+            // Uncheck ASCII
+            cbxASCII.IsChecked = false;
+            vm.ASCII_IsChecked = false;
+        }
+        // Unchecked
+        private void cbxSum_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
 
 
@@ -424,7 +656,7 @@ Apache License 2.0");
         {
             // Rows Over 2500 Warning
             //
-            if (int.Parse(vm.Rows_Text) >= 2500)
+            if (int.Parse(vm.Rows_Text) >= 1000)
             {
                 // Yes/No Dialog Confirmation
                 //
