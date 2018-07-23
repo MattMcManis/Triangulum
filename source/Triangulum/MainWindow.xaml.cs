@@ -189,7 +189,7 @@ Apache License 2.0");
         /// </summary>
         // Credit: https://www.w3resource.com/csharp-exercises/for-loop/csharp-for-loop-exercise-33.php
         // Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-        public void PascalsTriangle(ViewModel vm, int row)
+        public void PascalsTriangle(ViewModel vm, int rows)
         {
             // Progress Info
             vm.Display_Text = "Generating...";
@@ -199,23 +199,12 @@ Apache License 2.0");
             // System.Numerics.BigInteger
             BigInteger row_no;
             BigInteger c = 1;
-            BigInteger blk;
-            BigInteger i, j;
+            int i, j;
 
-            string spacer = string.Empty;
-            if (vm.Center_IsChecked == true)
-            {
-                spacer = " ";
-            }
-
-            row_no = row;
+            row_no = rows;
             for (i = 0; i < row_no; i++)
             {
-                List<string> triangle_row = new List<string>();
-
-                // Center
-                for (blk = 1; blk <= row_no - i; blk++)
-                    triangle_row.Add(spacer);
+                List<BigInteger> triangle_row = new List<BigInteger>();
 
                 for (j = 0; j <= i; j++)
                 {
@@ -227,30 +216,22 @@ Apache License 2.0");
                     // Convert to Binary
                     if (vm.Binary_IsChecked == true)
                     {
+                        // Odd = 1
                         if (c % 2 != 0)
-                            if (vm.Binary1_IsChecked == true)
-                            {
-                                triangle_row.Add("1 ");
-                            }
-                            else
-                            {
-                                triangle_row.Add("  ");
-                            }
-                        else
-                            if (vm.Binary0_IsChecked == true)
                         {
-                            triangle_row.Add("0 ");
+                            triangle_row.Add(1);
                         }
+                        // Even = 0
                         else
                         {
-                            triangle_row.Add("  ");
+                            triangle_row.Add(0);
                         }
                     }
 
                     // Integers
                     else
                     {
-                        triangle_row.Add(string.Format("{0} ", c));
+                        triangle_row.Add(c);
                     }
 
                 }
@@ -260,9 +241,6 @@ Apache License 2.0");
                 if (vm.Decimal_IsChecked == true)
                 {
                     string join = string.Join("", triangle_row);
-
-                    // Remove WhiteSpaces
-                    join = Regex.Replace(join, " ", ""); 
 
                     // Convert Binary to Decimal
                     BigInteger sequence = BinaryToDec(join);
@@ -275,10 +253,7 @@ Apache License 2.0");
                 // Sum
                 if (vm.Sum_IsChecked == true)
                 {
-                    BigInteger sum = triangle_row
-                                     .Where(x => !string.IsNullOrWhiteSpace(x))
-                                     .Where(x => !string.IsNullOrEmpty(x))
-                                     .Aggregate(BigInteger.Zero, (x, a) => x + BigInteger.Parse(a));
+                    BigInteger sum = triangle_row.Aggregate(BigInteger.Add);
 
                     triangle.Add(string.Join(" ", sum));
                 }
@@ -288,13 +263,56 @@ Apache License 2.0");
                 if (vm.Decimal_IsChecked == false &&
                     vm.Sum_IsChecked == false)
                 {
-                    triangle.Add(string.Join("", triangle_row));
+                    // Center
+                    if (vm.Center_IsChecked == true)
+                    {
+                        string rowJoin = string.Join(" ", triangle_row);
+
+                        int maxLength = rows;
+
+                        int spacer = maxLength - i;
+
+                        rowJoin = new string(' ', spacer) + rowJoin;
+
+                        triangle.Add(rowJoin);
+                    }
+                    
+                    // Left
+                    else if (vm.Center_IsChecked == false)
+                    {
+                        triangle.Add(string.Join(" ", triangle_row));
+                    }
+                    
                 }
 
             } // End Loop
 
+
             // Output
             string output = string.Join("\n", triangle);
+
+
+            // Convert to Binary
+            if (vm.Binary_IsChecked == true)
+            {
+                // Binary 0's
+                if (vm.Binary0_IsChecked == true &&
+                    vm.Binary1_IsChecked == false)
+                {
+                    output = Regex.Replace(output, "1", " ");
+                }
+
+                // Binary 1's
+                if (vm.Binary1_IsChecked == true &&
+                    vm.Binary0_IsChecked == false)
+                {
+                    output = Regex.Replace(output, "0", " ");
+                }
+
+                // Binary 1's & 0's
+                // Do not Regex Replace
+            }
+
 
             // Convert to ASCII
             if (vm.ASCII_IsChecked == true)
@@ -318,10 +336,12 @@ Apache License 2.0");
         }
 
 
-
         /// <summary>
-        ///     Binary to Decimal
+        /// Binary to Decimal
         /// </summary>
+        /// <remarks>
+        /// https://stackoverflow.com/a/44711854/6806643
+        /// </remarks>
         static BigInteger BinaryToDec(string input)
         {
             char[] array = input.ToCharArray();
