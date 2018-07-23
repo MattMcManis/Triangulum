@@ -15,7 +15,7 @@ Pascal's Triangle Generator
 ![Triangulum](https://raw.githubusercontent.com/MattMcManis/Triangulum/master/images/triangulum.png)  
 
 
-**Example Output:**
+### Example Output:
 
 Binary 1's
 
