@@ -52,9 +52,9 @@ namespace Triangulum
             Wrap_IsChecked = false;
             Wrap_Text = "NoWrap";
 
-            Binary_IsChecked = true;
+            Binary_IsChecked = false;
             Binary0_IsChecked = false;
-            Binary1_IsChecked = true;
+            Binary1_IsChecked = false;
 
             ASCII_IsChecked = false;
 
