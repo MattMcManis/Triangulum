@@ -289,7 +289,7 @@ Apache License 2.0");
 
 
             // Output
-            string output = string.Join("\n", triangle);
+            string output = string.Join("\r\n", triangle);
 
 
             // Convert to Binary
@@ -319,7 +319,7 @@ Apache License 2.0");
             {
                 string data = string.Empty;
                 data = Regex.Replace(output, " ", "");
-                data = Regex.Replace(output, "\n", "");
+                data = Regex.Replace(output, "\r\n", "");
                 var stream = convertToBytes(data);
                 output = Encoding.ASCII.GetString(stream);
             }
@@ -328,7 +328,7 @@ Apache License 2.0");
             if (vm.Inline_IsChecked == true)
             {
                 output = Regex.Replace(output, " ", "");
-                output = Regex.Replace(output, "\n", "");
+                output = Regex.Replace(output, "\r\n", "");
             }
 
             // Display
@@ -448,32 +448,20 @@ Apache License 2.0");
         private void cbxCenter_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Inline
-            if (vm.Inline_IsChecked == true)
-            {
-                cbxInline.IsChecked = false;
-                vm.Inline_IsChecked = false;
-            }
+            cbxInline.IsChecked = false;
+            vm.Inline_IsChecked = false;
 
             // Uncheck ASCII
-            if (vm.ASCII_IsChecked == true)
-            {
-                cbxASCII.IsChecked = false;
-                vm.ASCII_IsChecked = false;
-            }
+            cbxASCII.IsChecked = false;
+            vm.ASCII_IsChecked = false;
 
             // Uncheck Decimal
-            if (vm.Decimal_IsChecked == true)
-            {
-                cbxDecimal.IsChecked = false;
-                vm.Decimal_IsChecked = false;
-            }
+            cbxDecimal.IsChecked = false;
+            vm.Decimal_IsChecked = false;
 
             // Uncheck Sum
-            if (vm.Sum_IsChecked == true)
-            {
-                cbxSum.IsChecked = false;
-                vm.Sum_IsChecked = false;
-            }
+            cbxSum.IsChecked = false;
+            vm.Sum_IsChecked = false;
         }
 
 
@@ -483,11 +471,8 @@ Apache License 2.0");
         private void cbxInline_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            if (vm.Center_IsChecked == true)
-            {
-                cbxCenter.IsChecked = false;
-                vm.Center_IsChecked = false;
-            }
+            cbxCenter.IsChecked = false;
+            vm.Center_IsChecked = false;
         }
 
 
@@ -497,11 +482,8 @@ Apache License 2.0");
         private void cbxASCII_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            if (vm.Center_IsChecked == true)
-            {
-                cbxCenter.IsChecked = false;
-                vm.Center_IsChecked = false;
-            }
+            cbxCenter.IsChecked = false;
+            vm.Center_IsChecked = false;
 
             // Uncheck Binary
             cbxBinary.IsChecked = true;
@@ -527,11 +509,8 @@ Apache License 2.0");
         private void cbxDecimal_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            if (vm.Center_IsChecked == true)
-            {
-                cbxCenter.IsChecked = false;
-                vm.Center_IsChecked = false;
-            }
+            cbxCenter.IsChecked = false;
+            vm.Center_IsChecked = false;
 
             // Check Binary 0 & 1
             cbxBinary.IsChecked = true;
@@ -594,22 +573,16 @@ Apache License 2.0");
         private void cbx0_Checked(object sender, RoutedEventArgs e)
         {
             // Check Binary if Unchecked
-            if (vm.Binary_IsChecked == false)
-            {
-                cbxBinary.IsChecked = true;
-                vm.Binary_IsChecked = true;
-            }
+            cbxBinary.IsChecked = true;
+            vm.Binary_IsChecked = true;
         }
 
         // Binary 1 - CheckBox
         private void cbx1_Checked(object sender, RoutedEventArgs e)
         {
             // Check Binary if Unchecked
-            if (vm.Binary_IsChecked == false)
-            {
-                cbxBinary.IsChecked = true;
-                vm.Binary_IsChecked = true;
-            }
+            cbxBinary.IsChecked = true;
+            vm.Binary_IsChecked = true;
         }
 
 
@@ -684,7 +657,7 @@ Apache License 2.0");
         /// </summary>
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-            // Rows Over 2500 Warning
+            // Rows Over 1000 Warning
             //
             if (int.Parse(vm.Rows_Text) >= 1000)
             {
@@ -709,7 +682,7 @@ Apache License 2.0");
                 }
             }
 
-            // Rows Under 2500
+            // Rows Under 1000
             //
             else
             {

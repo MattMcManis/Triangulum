@@ -32,7 +32,7 @@
         Closing="Window_Closing"
         
         Icon="icon.ico"
-        Title="Triangulum v0.2.2" 
+        Title="Triangulum v0.2.3" 
         
         RenderOptions.BitmapScalingMode="Fant"
         UseLayoutRounding="True"
@@ -61,6 +61,7 @@
                  VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto" 
                  TextWrapping="{Binding Wrap_Text}"
+                 TextOptions.TextRenderingMode="Grayscale"
                  FontSize="{Binding Display_FontSize}" 
                  Foreground="White" 
                  Background="Black"
@@ -207,7 +208,7 @@
                 Width="60"
                 IsMoveToPointEnabled="True"
                 Minimum="1"
-                Maximum="18" 
+                Maximum="38" 
                 Value="12"
                 IsSnapToTickEnabled="True"
                 TickFrequency="1"
