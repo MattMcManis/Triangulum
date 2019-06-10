@@ -1,6 +1,6 @@
 ﻿/* ----------------------------------------------------------------------
 Triangulum
-Copyright (C) 2018 Matt McManis
+Copyright (C) 2018-2019 Matt McManis
 http://github.com/MattMcManis/Triangulum
 mattmcmanis@outlook.com
 
@@ -60,7 +60,7 @@ namespace Triangulum
 
             Inline_IsChecked = false;
 
-            Rows_Text = "200";
+            Rows_Text = "70";
         }
 
 
@@ -145,9 +145,11 @@ namespace Triangulum
             get { return _Center_IsChecked; }
             set
             {
-                if (_Center_IsChecked == value) return;
-
-                _Center_IsChecked = value;
+                if (_Center_IsChecked != value)
+                {
+                    _Center_IsChecked = value;
+                    OnPropertyChanged("Center_IsChecked");
+                }
             }
         }
 
@@ -161,9 +163,11 @@ namespace Triangulum
             get { return _Wrap_IsChecked; }
             set
             {
-                if (_Wrap_IsChecked == value) return;
-
-                _Wrap_IsChecked = value;
+                if (_Wrap_IsChecked != value)
+                {
+                    _Wrap_IsChecked = value;
+                    OnPropertyChanged("Wrap_IsChecked");
+                }
             }
         }
 
@@ -177,9 +181,11 @@ namespace Triangulum
             get { return _Inline_IsChecked; }
             set
             {
-                if (_Inline_IsChecked == value) return;
-
-                _Inline_IsChecked = value;
+                if (_Inline_IsChecked != value)
+                {
+                    _Inline_IsChecked = value;
+                    OnPropertyChanged("Inline_IsChecked");
+                }
             }
         }
 
@@ -193,9 +199,11 @@ namespace Triangulum
             get { return _ASCII_IsChecked; }
             set
             {
-                if (_ASCII_IsChecked == value) return;
-
-                _ASCII_IsChecked = value;
+                if (_ASCII_IsChecked != value)
+                {
+                    _ASCII_IsChecked = value;
+                    OnPropertyChanged("ASCII_IsChecked");
+                }
             }
         }
 
@@ -208,9 +216,11 @@ namespace Triangulum
             get { return _Binary_IsChecked; }
             set
             {
-                if (_Binary_IsChecked == value) return;
-
-                _Binary_IsChecked = value;
+                if (_Binary_IsChecked != value)
+                {
+                    _Binary_IsChecked = value;
+                    OnPropertyChanged("Binary_IsChecked");
+                }
             }
         }
 
@@ -223,9 +233,11 @@ namespace Triangulum
             get { return _Binary0_IsChecked; }
             set
             {
-                if (_Binary0_IsChecked == value) return;
-
-                _Binary0_IsChecked = value;
+                if (_Binary0_IsChecked != value)
+                {
+                    _Binary0_IsChecked = value;
+                    OnPropertyChanged("Binary0_IsChecked");
+                }
             }
         }
 
@@ -239,9 +251,11 @@ namespace Triangulum
             get { return _Binary1_IsChecked; }
             set
             {
-                if (_Binary1_IsChecked == value) return;
-
-                _Binary1_IsChecked = value;
+                if (_Binary1_IsChecked != value)
+                {
+                    _Binary1_IsChecked = value;
+                    OnPropertyChanged("Binary1_IsChecked");
+                }
             }
         }
 
@@ -255,9 +269,11 @@ namespace Triangulum
             get { return _Sum_IsChecked; }
             set
             {
-                if (_Sum_IsChecked == value) return;
-
-                _Sum_IsChecked = value;
+                if (_Sum_IsChecked != value)
+                {
+                    _Sum_IsChecked = value;
+                    OnPropertyChanged("Sum_IsChecked");
+                }
             }
         }
 
@@ -272,9 +288,11 @@ namespace Triangulum
             get { return _Decimal_IsChecked; }
             set
             {
-                if (_Decimal_IsChecked == value) return;
-
-                _Decimal_IsChecked = value;
+                if (_Decimal_IsChecked != value)
+                {
+                    _Decimal_IsChecked = value;
+                    OnPropertyChanged("Decimal_IsChecked");
+                }
             }
         }
 
@@ -295,6 +313,41 @@ namespace Triangulum
             }
         }
 
+
+        // -------------------------
+        // NumberDistribution - Toggle
+        // -------------------------
+        // Checked
+        private bool _NumberDistribution_IsChecked;
+        public bool NumberDistribution_IsChecked
+        {
+            get { return _NumberDistribution_IsChecked; }
+            set
+            {
+                if (_NumberDistribution_IsChecked != value)
+                {
+                    _NumberDistribution_IsChecked = value;
+                    OnPropertyChanged("NumberDistribution_IsChecked");
+                }
+            }
+        }
+
+        // Enabled
+        private bool _NumberDistribution_IsEnabled = true;
+        public bool NumberDistribution_IsEnabled
+        {
+            get { return _NumberDistribution_IsEnabled; }
+            set
+            {
+                if (_NumberDistribution_IsEnabled == value)
+                {
+                    return;
+                }
+
+                _NumberDistribution_IsEnabled = value;
+                OnPropertyChanged("NumberDistribution_IsEnabled");
+            }
+        }
 
 
 

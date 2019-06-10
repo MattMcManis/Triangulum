@@ -1,6 +1,6 @@
 ﻿/* ----------------------------------------------------------------------
 Triangulum
-Copyright (C) 2018 Matt McManis
+Copyright (C) 2018-2019 Matt McManis
 http://github.com/MattMcManis/Triangulum
 mattmcmanis@outlook.com
 
@@ -190,225 +190,7 @@ Apache License 2.0");
         }
 
 
-        /// <summary>
-        ///     Pascals Triangle - Method
-        /// </summary>
-        // Credit: https://www.w3resource.com/csharp-exercises/for-loop/csharp-for-loop-exercise-33.php
-        // Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-        public void PascalsTriangle(ViewModel vm, int rows)
-        {
-            // Progress Info
-            vm.Display_Text = "Generating...";
-
-            List<string> triangle = new List<string>();
-
-            // System.Numerics.BigInteger
-            BigInteger row_no;
-            BigInteger c = 1;
-            int i, j;
-
-            row_no = rows;
-            for (i = 0; i < row_no; i++)
-            {
-                List<BigInteger> triangle_row = new List<BigInteger>();
-
-                for (j = 0; j <= i; j++)
-                {
-                    if (j == 0 || i == 0)
-                        c = 1;
-                    else
-                        c = c * (i - j + 1) / j;
-
-                    // Convert to Binary
-                    if (vm.Binary_IsChecked == true)
-                    {
-                        // Odd = 1
-                        if (c % 2 != 0)
-                        {
-                            triangle_row.Add(1);
-                        }
-                        // Even = 0
-                        else
-                        {
-                            triangle_row.Add(0);
-                        }
-                    }
-
-                    // Integers
-                    else
-                    {
-                        triangle_row.Add(c);
-                    }
-
-                }
-
-
-                // Decimal
-                if (vm.Decimal_IsChecked == true)
-                {
-                    string join = string.Join("", triangle_row);
-
-                    // Convert Binary to Decimal
-                    BigInteger sequence = BinaryToDec(join);
-
-                    // Add to Triangle
-                    triangle.Add(Convert.ToString(sequence));
-                }
-
-
-                // Sum
-                if (vm.Sum_IsChecked == true)
-                {
-                    BigInteger sum = triangle_row.Aggregate(BigInteger.Add);
-
-                    triangle.Add(string.Join(" ", sum));
-                }
-
-
-                // Individual
-                if (vm.Decimal_IsChecked == false &&
-                    vm.Sum_IsChecked == false)
-                {
-                    triangle.Add(string.Join(" ", triangle_row));
-                }
-
-            } // End Loop
-
-
-
-            // Center
-            if (vm.Center_IsChecked == true)
-            {
-                var maxLength = triangle.Last().Length;
-                for (i = 0; i < rows; i++)
-                {
-                    triangle[i] = new string(' ', (maxLength - triangle[i].Length) / 2) + triangle[i];
-                }
-            }
-
-
-
-            // Output
-            string output = string.Join("\r\n", triangle);
-
-
-            // Convert to Binary
-            if (vm.Binary_IsChecked == true)
-            {
-                // Binary 0's
-                if (vm.Binary0_IsChecked == true &&
-                    vm.Binary1_IsChecked == false)
-                {
-                    output = Regex.Replace(output, "1", " ");
-                }
-
-                // Binary 1's
-                if (vm.Binary1_IsChecked == true &&
-                    vm.Binary0_IsChecked == false)
-                {
-                    output = Regex.Replace(output, "0", " ");
-                }
-
-                // Binary 1's & 0's
-                // Do not Regex Replace
-            }
-
-
-            // Convert to ASCII
-            if (vm.ASCII_IsChecked == true)
-            {
-                string data = string.Empty;
-                data = Regex.Replace(output, " ", "");
-                data = Regex.Replace(output, "\r\n", "");
-                var stream = convertToBytes(data);
-                output = Encoding.ASCII.GetString(stream);
-            }
-
-            // Inline
-            if (vm.Inline_IsChecked == true)
-            {
-                output = Regex.Replace(output, " ", "");
-                output = Regex.Replace(output, "\r\n", "");
-            }
-
-            // Display
-            vm.Display_Text = output;
-
-            //Dispatcher.BeginInvoke((Action)(() =>
-            //{
-            //    p.Inlines.Clear();
-            //    rtbDisplay.Document = new FlowDocument(p);
-            //    rtbDisplay.BeginChange();
-            //    p.Inlines.Add(new Run(vm.Display_Text));
-            //    rtbDisplay.EndChange();
-            //}));
-
-        }
-
-
-        /// <summary>
-        /// Binary to Decimal
-        /// </summary>
-        /// <remarks>
-        /// https://stackoverflow.com/a/44711854/6806643
-        /// </remarks>
-        static BigInteger BinaryToDec(string input)
-        {
-            char[] array = input.ToCharArray();
-            // Reverse since 16-8-4-2-1 not 1-2-4-8-16. 
-            Array.Reverse(array);
-            /*
-             * [0] = 1
-             * [1] = 2
-             * [2] = 4
-             * etc
-             */
-            BigInteger sum = 0;
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] == '1')
-                {
-                    // Method uses raising 2 to the power of the index. 
-                    if (i == 0)
-                    {
-                        sum += 1;
-                    }
-                    else
-                    {
-                        sum += (BigInteger)Math.Pow(2, i);
-                    }
-                }
-
-            }
-
-            return sum;
-        }
-
-
-        /// <summary>
-        ///     Binary to ASCII
-        /// </summary>
-        private byte[] convertToBytes(string s)
-        {
-            byte[] result = new byte[(s.Length + 7) / 8];
-
-            int i = 0;
-            int j = 0;
-            foreach (char c in s)
-            {
-                result[i] <<= 1;
-                if (c == '1')
-                    result[i] |= 1;
-                j++;
-                if (j == 8)
-                {
-                    i++;
-                    j = 0;
-                }
-            }
-            return result;
-        }
+        
 
 
         /// <summary>
@@ -448,19 +230,15 @@ Apache License 2.0");
         private void cbxCenter_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Inline
-            cbxInline.IsChecked = false;
             vm.Inline_IsChecked = false;
 
             // Uncheck ASCII
-            cbxASCII.IsChecked = false;
             vm.ASCII_IsChecked = false;
 
             // Uncheck Decimal
-            cbxDecimal.IsChecked = false;
             vm.Decimal_IsChecked = false;
 
             // Uncheck Sum
-            cbxSum.IsChecked = false;
             vm.Sum_IsChecked = false;
         }
 
@@ -471,7 +249,6 @@ Apache License 2.0");
         private void cbxInline_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            cbxCenter.IsChecked = false;
             vm.Center_IsChecked = false;
         }
 
@@ -482,25 +259,20 @@ Apache License 2.0");
         private void cbxASCII_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            cbxCenter.IsChecked = false;
             vm.Center_IsChecked = false;
 
             // Uncheck Binary
-            cbxBinary.IsChecked = true;
-            cbx0.IsChecked = true;
-            cbx1.IsChecked = true;
-
-            vm.Binary_IsChecked = true;
             vm.Binary1_IsChecked = true;
             vm.Binary0_IsChecked = true;
 
             // Uncheck Decimal
-            cbxDecimal.IsChecked = false;
             vm.Decimal_IsChecked = false;
 
             // Uncheck Sum
-            cbxSum.IsChecked = false;
             vm.Sum_IsChecked = false;
+
+            // Uncheck Number Distribution
+            vm.NumberDistribution_IsChecked = false;
         }
 
         /// <summary>
@@ -509,24 +281,16 @@ Apache License 2.0");
         private void cbxDecimal_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            cbxCenter.IsChecked = false;
             vm.Center_IsChecked = false;
 
             // Check Binary 0 & 1
-            cbxBinary.IsChecked = true;
-            cbx0.IsChecked = true;
-            cbx1.IsChecked = true;
-
-            vm.Binary_IsChecked = true;
             vm.Binary0_IsChecked = true;
             vm.Binary1_IsChecked = true;
 
             // Uncheck ASCII
-            cbxASCII.IsChecked = false;
             vm.ASCII_IsChecked = false;
 
             // Uncheck Sum
-            cbxSum.IsChecked = false;
             vm.Sum_IsChecked = false;
         }
 
@@ -538,11 +302,7 @@ Apache License 2.0");
         private void cbxBinary_Checked(object sender, RoutedEventArgs e)
         {
             // Check Binary 0 & 1
-            //cbx0.IsChecked = true;
-            cbx1.IsChecked = true;
-
-            vm.Binary_IsChecked = true;
-            //vm.Binary0_IsChecked = true;
+            vm.Binary0_IsChecked = true;
             vm.Binary1_IsChecked = true;
 
 
@@ -555,10 +315,6 @@ Apache License 2.0");
         private void cbxBinary_Unchecked(object sender, RoutedEventArgs e)
         {
             // Uncheck Binary 0 & 1
-            cbx0.IsChecked = false;
-            cbx1.IsChecked = false;
-
-            vm.Binary_IsChecked = false;
             vm.Binary0_IsChecked = false;
             vm.Binary1_IsChecked = false;
 
@@ -573,7 +329,6 @@ Apache License 2.0");
         private void cbx0_Checked(object sender, RoutedEventArgs e)
         {
             // Check Binary if Unchecked
-            cbxBinary.IsChecked = true;
             vm.Binary_IsChecked = true;
         }
 
@@ -581,7 +336,6 @@ Apache License 2.0");
         private void cbx1_Checked(object sender, RoutedEventArgs e)
         {
             // Check Binary if Unchecked
-            cbxBinary.IsChecked = true;
             vm.Binary_IsChecked = true;
         }
 
@@ -589,19 +343,16 @@ Apache License 2.0");
         /// <summary>
         ///     Sum - CheckBox
         /// </summary>
-        // Unchecked
+        // Checked
         private void cbxSum_Checked(object sender, RoutedEventArgs e)
         {
             // Uncheck Center
-            cbxCenter.IsChecked = false;
             vm.Center_IsChecked = false;
 
             // Uncheck Decimal
-            cbxDecimal.IsChecked = false;
             vm.Decimal_IsChecked = false;
 
             // Uncheck ASCII
-            cbxASCII.IsChecked = false;
             vm.ASCII_IsChecked = false;
         }
         // Unchecked
@@ -611,14 +362,38 @@ Apache License 2.0");
         }
 
 
+
+        /// <summary>
+        ///     Number Distribution - CheckBox
+        /// </summary>
+        // Checked
+        private void cbxNumberDistribution_Checked(object sender, RoutedEventArgs e)
+        {
+            // Uncheck Center
+            vm.Center_IsChecked = false;
+
+            // Uncheck Inline
+            vm.Inline_IsChecked = false;
+
+            // Uncheck ASCII
+            vm.ASCII_IsChecked = false;
+        }
+        // Unchecked
+        private void cbxNumberDistribution_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+
         /// <summary>
         ///     Rows - TextBox
         /// </summary>
         private void tbxRows_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // Only Allow Numbers or Backspace
-            if (!(e.Key >= Key.D0 && e.Key <= Key.D9) && e.Key != Key.Back ||
-                e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+            if ((!(e.Key >= Key.D0 && e.Key <= Key.D9) && e.Key != Key.Back) ||
+                (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9))
             {
                 e.Handled = true;
             }
@@ -642,7 +417,7 @@ Apache License 2.0");
             //
             Thread worker = new Thread(() =>
             {
-                PascalsTriangle(vm, rows);
+                Generator.PascalsTriangle(vm, rows);
             });
             worker.IsBackground = true;
 
@@ -664,7 +439,7 @@ Apache License 2.0");
                 // Yes/No Dialog Confirmation
                 //
                 MessageBoxResult result = MessageBox.Show(
-                                                        "Entering a high number of rows uses a lot of processing power and system memory and could risk crashing your computer.\n\nContinue?",
+                                                        "Entering a high number of rows requires a lot of processing power and system memory, and could risk crashing your computer.\n\nContinue?",
                                                         "Arithmetic Overflow Warning",
                                                         MessageBoxButton.YesNo,
                                                         MessageBoxImage.Warning

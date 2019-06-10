@@ -1,6 +1,6 @@
 ﻿<!-- 
     Triangulum
-    Copyright (C) 2018 Matt McManis
+    Copyright (C) 2018-2019 Matt McManis
     http://github.com/MattMcManis/Triangulum
     mattmcmanis@outlook.com
 
@@ -32,7 +32,7 @@
         Closing="Window_Closing"
         
         Icon="icon.ico"
-        Title="Triangulum v0.2.3" 
+        Title="Triangulum v0.3.0" 
         
         RenderOptions.BitmapScalingMode="Fant"
         UseLayoutRounding="True"
@@ -53,10 +53,20 @@
     <Grid>
 
         <!-- Display -->
+        <Rectangle Margin="0,10,10,10" HorizontalAlignment="Right" Width="95">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#7FFFFFFF" Offset="0"/>
+                    <GradientStop Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!-- Display -->
         <TextBox x:Name="tbxDisplay" 
                  FontFamily="{DynamicResource RobotoMono}"
                  Text="{Binding Display_Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="10,10,10,46" 
+                 Margin="10,10,110,10" 
                  Padding="10"
                  VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto" 
@@ -75,96 +85,97 @@
             </TextBox.Resources>
         </TextBox>
 
-        <!--<RichTextBox x:Name="rtbDisplay" 
-                     Margin="10,10,10,46" 
-                     Padding="10"
-                     FontSize="12"
-                     Foreground="White" 
-                     Background="Black"
-                     IsReadOnly="True"
-                     Grid.ColumnSpan="1" 
-                     IsUndoEnabled="False"
-                     VerticalScrollBarVisibility="Auto" 
-                     HorizontalScrollBarVisibility="Auto">
-            <RichTextBox.Resources>
-                <Style x:Key="RobotMono-Regular">
-                    <Setter Property="TextElement.FontFamily" 
-                            Value="Resources/#Roboto Mono" />
-                </Style>
-            </RichTextBox.Resources>
-        </RichTextBox>-->
-
         <!-- Sum -->
         <CheckBox x:Name="cbxSum" 
                   IsChecked="{Binding Sum_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Sum" 
-                  Margin="0,0,257,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,172,45,0" 
                   HorizontalAlignment="Right" 
                   Width="52" 
                   Checked="cbxSum_Checked"
-                  Unchecked="cbxSum_Unchecked"/>
+                  Unchecked="cbxSum_Unchecked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Calculate the sum of each row."
+                  />
 
         <!-- Decimal -->
         <CheckBox x:Name="cbxDecimal" 
                   IsChecked="{Binding Decimal_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   IsEnabled="{Binding Decimal_IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Decimal" 
-                  Margin="0,0,319,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,138,31,0" 
                   HorizontalAlignment="Right" 
-                  Width="66" Checked="cbxDecimal_Checked" />
+                  Width="66" 
+                  Checked="cbxDecimal_Checked" 
+                  Height="15"
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Convert Binary values into Decimals."
+                  />
 
         <!-- Center -->
         <CheckBox x:Name="cbxCenter" 
                   IsChecked="{Binding Center_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Center" 
-                  Margin="0,0,641,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,24,33,0" 
                   HorizontalAlignment="Right" 
-                  Width="64" Checked="cbxCenter_Checked" />
+                  Width="64" 
+                  Checked="cbxCenter_Checked" 
+                  Height="15"
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Center the text." />
 
         <!-- Display Wrap -->
         <CheckBox x:Name="cbxWrap" 
                   IsChecked="{Binding Wrap_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Wrap" 
-                  Margin="0,0,523,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,64,47,0" 
                   HorizontalAlignment="Right" 
                   Width="50" 
                   Checked="cbxWrap_Checked"
-                  Unchecked="cbxWrap_Unchecked"/>
+                  Unchecked="cbxWrap_Unchecked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Enable text wrapping."
+                  />
 
         <!-- Info -->
         <Button x:Name="btnInfo" 
                 Cursor="Hand"
-                Margin="10,0,0,14" 
+                Margin="0,0,76,17" 
                 Click="btnInfo_Click"
                 Height="22" 
                 VerticalAlignment="Bottom" 
-                HorizontalAlignment="Left" 
-                Width="22" Background="#FFF0F0F0">
+                Background="#FFF0F0F0" 
+                HorizontalAlignment="Right" 
+                Width="22">
             <Image Source="Resources/info.png"
                    Width="5" 
                    Height="10" 
                    Stretch="Fill" 
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   ToolTipService.InitialShowDelay="500"
+                   ToolTipService.ShowOnDisabled="True"
+                   ToolTip="Program info."
+                   />
         </Button>
 
         <!-- Clear -->
         <Button x:Name="btnClear" 
                 Cursor="Hand"
-                Margin="39,0,0,14" 
+                Margin="0,0,47,17" 
                 Height="22" 
                 VerticalAlignment="Bottom" 
-                HorizontalAlignment="Left" 
-                Width="22" 
-                Background="#FFF0F0F0" Click="btnClear_Click">
+                Background="#FFF0F0F0" Click="btnClear_Click" HorizontalAlignment="Right" Width="22">
             <Image Source="Resources/clear.png"
                    Width="10" 
                    Height="10" 
@@ -172,19 +183,23 @@
                    Opacity="0.8"
                    Stretch="Fill" 
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   ToolTipService.InitialShowDelay="500"
+                   ToolTipService.ShowOnDisabled="True"
+                   ToolTip="Clear all text."
+                   />
         </Button>
 
         <!-- Save -->
         <Button x:Name="btnSave" 
                 Cursor="Hand"
-                Margin="68,0,0,14" 
+                Margin="0,0,18,17" 
                 Height="22" 
                 VerticalAlignment="Bottom" 
-                HorizontalAlignment="Left" 
-                Width="22" 
                 Click="btnSave_Click" 
-                Background="#FFF0F0F0">
+                Background="#FFF0F0F0"
+                HorizontalAlignment="Right"
+                Width="22">
             <Image Source="Resources/save.png"
                    Width="11" 
                    Height="12" 
@@ -192,20 +207,26 @@
                    Opacity="0.8"
                    Stretch="Fill" 
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   ToolTipService.InitialShowDelay="500"
+                   ToolTipService.ShowOnDisabled="True"
+                   ToolTip="Save output to text file."
+                   />
         </Button>
 
         <!-- Font Size -->
-        <Label Content="Size"
-               HorizontalAlignment="Left" 
-               Margin="100,0,0,11" 
-               Width="32" 
+        <Label Content="Size" 
+               Margin="0,0,69,138" 
                Height="28" 
-               VerticalAlignment="Bottom"/>
-        <Slider x:Name="slFontSize" 
-                HorizontalAlignment="Left"
-                Margin="132,0,0,16" 
-                Width="60"
+               VerticalAlignment="Bottom" 
+               HorizontalAlignment="Right" 
+               Width="32"
+               ToolTipService.InitialShowDelay="500"
+               ToolTipService.ShowOnDisabled="True"
+               ToolTip="Change text size."
+               />
+        <Slider x:Name="slFontSize"
+                Margin="0,0,18,143"
                 IsMoveToPointEnabled="True"
                 Minimum="1"
                 Maximum="38" 
@@ -215,99 +236,148 @@
                 PreviewMouseUp="slFontSize_PreviewMouseUp"
                 MouseDoubleClick="slFontSize_MouseDoubleClick" 
                 Height="18" 
-                VerticalAlignment="Bottom"/>
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Right"
+                Width="51"
+                ToolTipService.InitialShowDelay="500"
+                ToolTipService.ShowOnDisabled="True"
+                ToolTip="Change text size."
+                />
         <TextBox x:Name="tbxFontSize"
                  Text="{Binding Value, ElementName=slFontSize, UpdateSourceTrigger=PropertyChanged}" 
                  TextWrapping="Wrap" 
-                 Margin="197,0,0,14"
-                 Padding="2,0,2,0"
-                 HorizontalAlignment="Left"
-                 Width="30" 
+                 Margin="0,0,-51,140"
+                 Padding="2,0,2,0" 
                  Height="22" 
-                 VerticalAlignment="Bottom"/>
+                 VerticalAlignment="Bottom" 
+                 HorizontalAlignment="Right"
+                 Width="30"
+                 ToolTipService.InitialShowDelay="500"
+                 ToolTipService.ShowOnDisabled="True"
+                 ToolTip="Display text inline."
+                 />
 
         <!-- Inline -->
         <CheckBox x:Name="cbxInline" 
                   IsChecked="{Binding Inline_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Inline" 
-                  Margin="0,0,586,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,44,47,0" 
                   HorizontalAlignment="Right" 
-                  Width="50" Checked="cbxInline_Checked"/>
+                  Width="50" 
+                  Checked="cbxInline_Checked"
+                  Height="15"
+                  VerticalAlignment="Top"/>
 
         <!-- ASCII -->
         <CheckBox x:Name="cbxASCII" 
                   IsChecked="{Binding ASCII_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="ASCII" 
-                  Margin="0,0,206,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,192,47,0" 
                   HorizontalAlignment="Right" 
                   Width="50" 
-                  Checked="cbxASCII_Checked"/>
+                  Checked="cbxASCII_Checked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Convert Binary to ASCII."
+                  />
+
+        <!-- Number Distribution -->
+        <CheckBox x:Name="cbxNumberDistribution" 
+                  IsChecked="{Binding NumberDistribution_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Distr" 
+                  Margin="0,212,45,0" 
+                  HorizontalAlignment="Right" 
+                  Width="52" 
+                  Checked="cbxNumberDistribution_Checked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Display the number occurrence distribution."
+                  />
 
         <!-- Binary -->
         <CheckBox x:Name="cbxBinary" 
                   IsChecked="{Binding Binary_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Binary" 
-                  Margin="0,0,455,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,98,41,0" 
                   HorizontalAlignment="Right" 
                   Width="56" 
                   Checked="cbxBinary_Checked"
-                  Unchecked="cbxBinary_Unchecked"/>
+                  Unchecked="cbxBinary_Unchecked" 
+                  Height="15"
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Convert even numbers to 0 and odd numbers to 1."
+                  />
 
         <!-- Binary 0 -->
         <CheckBox x:Name="cbx0" 
                   IsChecked="{Binding Binary0_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="0" 
-                  Margin="0,0,428,18" 
-                  Height="15" 
-                  VerticalAlignment="Bottom" 
+                  Margin="0,118,71,0" 
                   HorizontalAlignment="Right" 
-                  Width="26" Checked="cbx0_Checked"/>
+                  Width="26" 
+                  Checked="cbx0_Checked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Enable Binary 0's."
+                  />
 
         <!-- Binary 1 -->
         <CheckBox x:Name="cbx1" 
                   Content="1" 
                   IsChecked="{Binding Binary1_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  Margin="0,0,397,18" 
+                  Margin="0,118,40,0" 
                   HorizontalAlignment="Right" 
                   Width="26" 
+                  Checked="cbx1_Checked" 
                   Height="15" 
-                  VerticalAlignment="Bottom" Checked="cbx1_Checked"/>
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Enable Binary 1's."
+                  />
 
         <!-- Rows -->
         <Label Content="Rows" 
-               Margin="0,0,161,11" 
+               Margin="0,0,65,87" 
                Height="28" 
                VerticalAlignment="Bottom" 
                HorizontalAlignment="Right" 
                Width="37"/>
         <TextBox x:Name="tbxRows"
                  Text="{Binding Rows_Text, Mode=TwoWay}"
-                 Margin="0,0,95,14" 
+                 Margin="0,0,18,90" 
                  Padding="3,0,3,0"
                  TextWrapping="NoWrap" 
                  MaxLines="1"
                  PreviewKeyDown="tbxRows_PreviewKeyDown"
                  HorizontalAlignment="Right"
-                 Width="65" 
+                 Width="47" 
                  Height="22" 
-                 VerticalAlignment="Bottom"/>
+                 VerticalAlignment="Bottom"
+                 ToolTipService.InitialShowDelay="500"
+                 ToolTipService.ShowOnDisabled="True"
+                 ToolTip="Number of rows to generate."
+                 />
 
         <!-- Go -->
         <Button x:Name="btnGo" 
-                Content="Go" 
+                Content="Generate" 
                 Cursor="Hand"
-                Margin="0,0,10,14" 
+                Margin="0,0,18,60" 
                 Click="btnGo_Click" 
-                Width="75" 
+                Width="80" 
                 Height="22" 
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Right" 
                 Background="#FFF0F0F0"/>
+
     </Grid>
 </Window>
