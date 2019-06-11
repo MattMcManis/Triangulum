@@ -47,8 +47,11 @@ namespace Triangulum
             // -------------------------
             // Defaults
             // -------------------------
-            Center_IsChecked = true;
+            Display_IsChecked = true;
+            Warnings_IsChecked = true;
 
+            Center_IsChecked = true;
+            Inline_IsChecked = false;
             Wrap_IsChecked = false;
             Wrap_Text = "NoWrap";
 
@@ -58,14 +61,106 @@ namespace Triangulum
 
             ASCII_IsChecked = false;
 
-            Inline_IsChecked = false;
-
             Rows_Text = "70";
         }
 
 
         // -------------------------
-        // Display
+        // CPU Usage
+        // -------------------------
+        private string _CPU_Text;
+        public string CPU_Text
+        {
+            get { return _CPU_Text; }
+            set
+            {
+                if (_CPU_Text == value)
+                {
+                    return;
+                }
+
+                _CPU_Text = value;
+                OnPropertyChanged("CPU_Text");
+            }
+        }
+
+
+        // -------------------------
+        // RAM Usage
+        // -------------------------
+        private string _RAM_Text;
+        public string RAM_Text
+        {
+            get { return _RAM_Text; }
+            set
+            {
+                if (_RAM_Text == value)
+                {
+                    return;
+                }
+
+                _RAM_Text = value;
+                OnPropertyChanged("RAM_Text");
+            }
+        }
+
+
+        // -------------------------
+        // Display - CheckBox
+        // -------------------------
+        private bool _Display_IsChecked;
+        public bool Display_IsChecked
+        {
+            get { return _Display_IsChecked; }
+            set
+            {
+                if (_Display_IsChecked != value)
+                {
+                    _Display_IsChecked = value;
+                    OnPropertyChanged("Display_IsChecked");
+                }
+            }
+        }
+
+
+        // -------------------------
+        // Warnings - CheckBox
+        // -------------------------
+        private bool _Warnings_IsChecked;
+        public bool Warnings_IsChecked
+        {
+            get { return _Warnings_IsChecked; }
+            set
+            {
+                if (_Warnings_IsChecked != value)
+                {
+                    _Warnings_IsChecked = value;
+                    OnPropertyChanged("Warnings_IsChecked");
+                }
+            }
+        }
+
+
+        // -------------------------
+        // Autosave - CheckBox
+        // -------------------------
+        private bool _Autosave_IsChecked;
+        public bool Autosave_IsChecked
+        {
+            get { return _Autosave_IsChecked; }
+            set
+            {
+                if (_Autosave_IsChecked != value)
+                {
+                    _Autosave_IsChecked = value;
+                    OnPropertyChanged("Autosave_IsChecked");
+                }
+            }
+        }
+
+
+        // -------------------------
+        // Display - Text
         // -------------------------
         public string _Display_Text;
         public string Display_Text

@@ -32,7 +32,7 @@
         Closing="Window_Closing"
         
         Icon="icon.ico"
-        Title="Triangulum v0.3.0" 
+        Title="Triangulum v0.3.1" 
         
         RenderOptions.BitmapScalingMode="Fant"
         UseLayoutRounding="True"
@@ -106,9 +106,9 @@
                   IsChecked="{Binding Decimal_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   IsEnabled="{Binding Decimal_IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Decimal" 
-                  Margin="0,138,31,0" 
+                  Margin="0,138,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="66" 
+                  Width="79" 
                   Checked="cbxDecimal_Checked" 
                   Height="15"
                   VerticalAlignment="Top"
@@ -121,9 +121,9 @@
         <CheckBox x:Name="cbxCenter" 
                   IsChecked="{Binding Center_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Center" 
-                  Margin="0,24,33,0" 
+                  Margin="0,24,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="64" 
+                  Width="79" 
                   Checked="cbxCenter_Checked" 
                   Height="15"
                   VerticalAlignment="Top"
@@ -135,9 +135,9 @@
         <CheckBox x:Name="cbxWrap" 
                   IsChecked="{Binding Wrap_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Wrap" 
-                  Margin="0,64,47,0" 
+                  Margin="0,64,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="50" 
+                  Width="79" 
                   Checked="cbxWrap_Checked"
                   Unchecked="cbxWrap_Unchecked" 
                   Height="15" 
@@ -146,6 +146,22 @@
                   ToolTipService.ShowOnDisabled="True"
                   ToolTip="Enable text wrapping."
                   />
+
+
+        <!-- CPU Usage -->
+        <TextBlock  Margin="0,352,18,210" 
+                    TextWrapping="Wrap"
+                    Text="{Binding CPU_Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    HorizontalAlignment="Right" 
+                    Width="79"/>
+
+        <!-- RAM Usage -->
+        <TextBlock  Margin="0,373,18,189" 
+                    TextWrapping="Wrap"
+                    Text="{Binding RAM_Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    HorizontalAlignment="Right" 
+                    Width="79"/>
+
 
         <!-- Info -->
         <Button x:Name="btnInfo" 
@@ -261,9 +277,9 @@
         <CheckBox x:Name="cbxInline" 
                   IsChecked="{Binding Inline_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Inline" 
-                  Margin="0,44,47,0" 
+                  Margin="0,44,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="50" 
+                  Width="79" 
                   Checked="cbxInline_Checked"
                   Height="15"
                   VerticalAlignment="Top"/>
@@ -272,9 +288,9 @@
         <CheckBox x:Name="cbxASCII" 
                   IsChecked="{Binding ASCII_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="ASCII" 
-                  Margin="0,192,47,0" 
+                  Margin="0,192,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="50" 
+                  Width="79" 
                   Checked="cbxASCII_Checked" 
                   Height="15" 
                   VerticalAlignment="Top"
@@ -287,15 +303,63 @@
         <CheckBox x:Name="cbxNumberDistribution" 
                   IsChecked="{Binding NumberDistribution_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Content="Distr" 
-                  Margin="0,212,45,0" 
+                  Margin="0,212,18,0" 
                   HorizontalAlignment="Right" 
-                  Width="52" 
+                  Width="79" 
                   Checked="cbxNumberDistribution_Checked" 
                   Height="15" 
                   VerticalAlignment="Top"
                   ToolTipService.InitialShowDelay="500"
                   ToolTipService.ShowOnDisabled="True"
                   ToolTip="Display the number occurrence distribution."
+                  />
+
+        <!-- Display -->
+        <CheckBox x:Name="cbxDisplay" 
+                  IsChecked="{Binding Display_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Display" 
+                  Margin="0,245,18,0" 
+                  HorizontalAlignment="Right" 
+                  Width="79" 
+                  Checked="cbxDisplay_Checked" 
+                  Unchecked="cbxDisplay_Unchecked" 
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Display the output."
+                  />
+
+        <!-- Warnings-->
+        <CheckBox x:Name="cbxWarnings" 
+                  IsChecked="{Binding Warnings_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Warnings" 
+                  Margin="0,265,18,0" 
+                  HorizontalAlignment="Right" 
+                  Width="79" 
+                  Checked="cbxWarnings_Checked"
+                  Unchecked="cbxWarnings_Unchecked"
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Enable system resource warning notifications."
+                  />
+
+        <!-- Autosave-->
+        <CheckBox x:Name="cbxAutosave" 
+                  IsChecked="{Binding Autosave_IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Content="Autosave" 
+                  Margin="0,285,18,0" 
+                  HorizontalAlignment="Right" 
+                  Width="79" 
+                  Checked="cbxAutosave_Checked"
+                  Unchecked="cbxAutosave_Unchecked"
+                  Height="15" 
+                  VerticalAlignment="Top"
+                  ToolTipService.InitialShowDelay="500"
+                  ToolTipService.ShowOnDisabled="True"
+                  ToolTip="Auto Save output to text file."
                   />
 
         <!-- Binary -->

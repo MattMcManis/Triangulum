@@ -31,6 +31,9 @@ using System.ComponentModel;
 using System.Numerics;
 using System.Linq;
 using System.Windows.Documents;
+using System.Diagnostics;
+using System.Timers;
+using System.Threading.Tasks;
 
 namespace Triangulum
 {
@@ -39,15 +42,22 @@ namespace Triangulum
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        ///     View Model
-        /// </summary>
+        // View Model
         public ViewModel vm = new ViewModel();
 
-        /// <summary>
-        ///     RichTextBox
-        /// </summary>
+        // System
+        public static string appDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + @"\"; // exe directory
+        public static string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).TrimEnd('\\') + @"\";
+        public static string desktopDir = userProfile + @"Desktop\"; // C:\Users\Example\Desktop\
+
+        // RichTextBox
         public static Paragraph p = new Paragraph();
+
+        // UI Update Timer
+        public static System.Timers.Timer dispatcherTimer = new System.Timers.Timer();
+
+        //PerformanceCounter cpuCounter;
+        //PerformanceCounter ramCounter;
 
 
         /// <summary>
@@ -84,6 +94,18 @@ namespace Triangulum
                     WindowState = WindowState.Maximized;
                 }
             }
+
+            // CPU Usage
+            //cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+
+            // RAM Usage
+            //ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+
+            // --------------------------
+            // UI Update Timer
+            // --------------------------
+            //dispatcherTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            //dispatcherTimer.Interval = 0500;
         }
 
 
@@ -125,6 +147,32 @@ namespace Triangulum
             Environment.Exit(0);
         }
 
+        /// <summary>
+        ///     UI Update
+        /// </summary>
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            //vm.CPU_Text = "CPU: " + getCurrentCpuUsage().PadLeft(4, '0');
+            //vm.RAM_Text = "RAM: " + getAvailableRAM();
+        }
+
+
+        /// <summary>
+        ///     CPU Usage
+        /// </summary>
+        //public string getCurrentCpuUsage()
+        //{
+        //    return (int)Math.Round(cpuCounter.NextValue(), 0) + "%";
+        //}
+
+        /// <summary>
+        ///     RAM Usage
+        /// </summary>
+        //public string getAvailableRAM()
+        //{
+        //    return (int)Math.Round(ramCounter.NextValue(), 0) + "MB";
+        //}
+
 
         /// <summary>
         ///     Info - Button
@@ -134,7 +182,7 @@ namespace Triangulum
             MessageBox.Show(@"
 Triangulum
 Pascal's Triangle Generator
-© 2018 Matt McManis
+© 2018-2019 Matt McManis
 http://github.com/MattMcManis/Triangulum
 mattmcmanis@outlook.com
 GPL-3.0
@@ -169,6 +217,8 @@ Apache License 2.0");
         /// </summary>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            //Export.SaveFile();
+
             // Open 'Save File'
             Microsoft.Win32.SaveFileDialog saveFile = new Microsoft.Win32.SaveFileDialog();
 
@@ -185,13 +235,10 @@ Apache License 2.0");
             if (result == true)
             {
                 // Save document
-                File.WriteAllText(saveFile.FileName, vm.Display_Text, Encoding.Unicode);
+                File.WriteAllText(saveFile.FileName, /*vm.Display_Text*/Generator.output, Encoding.Unicode);
             }
         }
-
-
-        
-
+       
 
         /// <summary>
         ///     Font Size - Slider
@@ -385,6 +432,48 @@ Apache License 2.0");
         }
 
 
+        /// <summary>
+        ///     Display - Checkbox
+        /// </summary>
+        private void cbxDisplay_Checked(object sender, RoutedEventArgs e)
+        {
+            vm.Display_Text = Generator.output;
+        }
+
+        private void cbxDisplay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            vm.Display_Text = "Output Text Display is disabled but calculation will continue.";
+        }
+
+
+        /// <summary>
+        ///     Autosave - Checkbox
+        /// </summary>
+        private void cbxAutosave_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbxAutosave_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        /// <summary>
+        ///     Warnings - Checkbox
+        /// </summary>
+        private void cbxWarnings_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbxWarnings_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
 
         /// <summary>
         ///     Rows - TextBox
@@ -401,54 +490,65 @@ Apache License 2.0");
 
 
         /// <summary>
-        ///     Go - Method
+        ///     Generate - Method
         /// </summary>
-        public void Go()
+        public /*async Task<int>*/ void Generate()
         {
-            // Rows
-            //
-            int rows = 0;
-            if (!string.IsNullOrWhiteSpace(tbxRows.Text))
-            {
-                rows = int.Parse(vm.Rows_Text);
-            }
+            //int count = 0;
+            //await Task.Run(() =>
+            //{
+                // Display Timer
+                dispatcherTimer.Enabled = true;
 
-            // Start New Thread
-            //
-            Thread worker = new Thread(() =>
-            {
+                // Rows
+                //
+                int rows = 0;
+                if (!string.IsNullOrEmpty(vm.Rows_Text))
+                {
+                    rows = int.Parse(vm.Rows_Text);
+                }
+
+                // Start New Thread
+                //
+                Thread worker = new Thread(() =>
+                {
                 Generator.PascalsTriangle(vm, rows);
-            });
-            worker.IsBackground = true;
+                });
+                //worker.IsBackground = true;
 
-            // Start Download Thread
-            //
-            worker.Start();
+                // Start Download Thread
+                //
+                worker.Start();
+            //});
+
+            //return count;
         }
 
 
         /// <summary>
-        ///     Go - Button
+        ///     Generate - Button
         /// </summary>
-        private void btnGo_Click(object sender, RoutedEventArgs e)
+        private /*async*/ void btnGo_Click(object sender, RoutedEventArgs e)
         {
             // Rows Over 1000 Warning
             //
-            if (int.Parse(vm.Rows_Text) >= 1000)
+            if (int.Parse(vm.Rows_Text) >= 1000 && 
+                vm.Warnings_IsChecked == true)
             {
                 // Yes/No Dialog Confirmation
                 //
-                MessageBoxResult result = MessageBox.Show(
-                                                        "Entering a high number of rows requires a lot of processing power and system memory, and could risk crashing your computer.\n\nContinue?",
-                                                        "Arithmetic Overflow Warning",
-                                                        MessageBoxButton.YesNo,
-                                                        MessageBoxImage.Warning
-                                                        );
+                MessageBoxResult result = MessageBox.Show("Entering a high number of rows requires a lot of processing power and system memory, and could risk crashing your computer.\n\nContinue?",
+                                                          "Arithmetic Overflow Warning",
+                                                          MessageBoxButton.YesNo,
+                                                          MessageBoxImage.Warning
+                                                          );
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
                         // Run
-                        Go();
+                        //Task<int> task = Generate();
+                        //int count = await task;
+                        Generate();
                         break;
 
                     case MessageBoxResult.No:
@@ -461,10 +561,11 @@ Apache License 2.0");
             //
             else
             {
-                Go();
+                //Task<int> task = Generate();
+                //int count = await task;
+                Generate();
             }
         }
-
-
+       
     }
 }

@@ -24,11 +24,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Numerics;
+using System.IO;
 
 namespace Triangulum
 {
     public class Generator
     {
+        public static string output;
+
         /// <summary>
         ///     Pascals Triangle - Method
         /// </summary>
@@ -120,6 +123,13 @@ namespace Triangulum
             } // End Loop
 
 
+            // Progress Info
+            if (vm.Display_IsChecked == false)
+            {
+                vm.Display_Text = "Complete\r\n\r\nPlease Enable Display or Save Output.";
+            }
+
+
             // -------------------------
             // Center
             // -------------------------
@@ -136,7 +146,7 @@ namespace Triangulum
             // -------------------------
             // Output
             // -------------------------
-            string output = string.Join("\r\n", triangle);
+            output = string.Join("\r\n", triangle);
 
 
             // -------------------------
@@ -161,6 +171,7 @@ namespace Triangulum
                 // Binary 1's & 0's
                 // Do not Regex Replace
             }
+
 
             // -------------------------
             // Convert to ASCII
@@ -196,6 +207,7 @@ namespace Triangulum
                          "9:  " + output.Count(d => d == '9');
             }
 
+
             // -------------------------
             // Inline
             // -------------------------
@@ -206,9 +218,21 @@ namespace Triangulum
             }
 
             // -------------------------
+            // Autosave Export
+            // -------------------------
+            if (vm.Autosave_IsChecked == true)
+            {
+                //Export.SaveFile();
+                File.WriteAllText(MainWindow.desktopDir + "Triangulum " + DateTime.Now.ToString("yyyy-MM-dd HHmmss") + ".txt", Generator.output, Encoding.Unicode);
+            }
+
+            // -------------------------
             // Display
             // -------------------------
-            vm.Display_Text = output;
+            if (vm.Display_IsChecked == true)
+            {
+                vm.Display_Text = output;
+            }
         }
 
 
